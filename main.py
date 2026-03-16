@@ -18,15 +18,35 @@ def update_game_state(secret_word: str, guessed_letters: list[str], guess: str, 
     return updated_guessed_letters, updated_lives
 
 def get_masked_word(secret_word: str, guessed_letters: list[str]) -> str:
-    
+    """
+    Builds the masked word showing guessed letters and underscores for unguessed ones.
+
+    Args:
+        secret_word: The word to be guessed.
+        guessed_letters: List of letters already guessed.
+
+    Returns:
+        String representation of the masked word (e.g., "P Y T _ _ _").
+    """
     return " ".join([char if char in guessed_letters else "_" for char in secret_word])
 
 def is_game_won(secret_word: str, guessed_letters: list[str]) -> bool:
-    
+    """
+    Checks if all letters in the secret word have been guessed.
+
+    Args:
+        secret_word: The word to be guessed.
+        guessed_letters: List of letters already guessed.
+
+    Returns:
+        True if the game is won, False otherwise.
+    """
     return all(char in guessed_letters for char in secret_word)
 
-
-def play_game(auto_mode: bool = False) -> None: 
+def play_game() -> None:
+    """
+    Main game loop for a single round of the word guessing game.
+    """
     secret_word = random.choice(WORDS)
     guessed_letters: list[str] = []
     lives = INITIAL_LIVES
@@ -53,19 +73,16 @@ def play_game(auto_mode: bool = False) -> None:
         guessed_letters, lives = update_game_state(secret_word, guessed_letters, guess, lives)
         
 def main() -> None:
-    while True:
-        print("\n1. Play Game")
-        print("2. Auto Play")
-        print("3. Quit")
-        choice = input("Select (1/2/3): ").strip()
+    """
+    Main entry point for the game application.
+    Handles multiple rounds if the player chooses to play again.
+    """
+    play_again = 'Y'
+    while play_again == 'Y':
+        play_game()
+        play_again = input("\nWould you like to play again? (Y/N): ").strip().upper()
 
-        if choice == '1':
-            play_game(auto_mode=False)
-        elif choice == '2':
-            play_game(auto_mode=True)
-        elif choice == '3':
-            break
+    print("Thanks for playing!")
 
 if __name__ == "__main__":
     main()
-
