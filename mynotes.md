@@ -33,3 +33,9 @@ Copilot suggested:
 - Win: All letters in the secret word have been guessed correctly.
 - Lose: Player runs out of lives without guessing the word.
 - End/Prompt: Display results and ask if the player wants to play again.
+
+I added an auto_mode flag to the play_game function. If it’s true, the game skips the input() prompt and lets the computer take a turn. This kept the code clean and avoided duplicating the win/loss logic.
+
+To make sure the computer doesn't look "dumb" by guessing the same letter twice, I gave it its own pool of letters (the full alphabet). Every time it picks one, I pop it out of the list. It’s a simple but effective way to meet the "no-repeat" requirement.
+
+refactored the entry point so that once a game ends—whether the computer won or the human lost—it drops you right back at the main menu. This makes the "Auto Play" feel like a repeatable feature rather than a one-off script.
